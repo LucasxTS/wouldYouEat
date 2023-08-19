@@ -8,13 +8,18 @@ import com.example.wouldyoueat.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        textDegradeColor()
+        callingFunctions()
     }
 
+
+    private fun callingFunctions() {
+     textDegradeColor()
+    }
     private fun textDegradeColor() {
         val appTitle = binding.appTitle
         val appTitleText = "Fruits"
@@ -27,5 +32,9 @@ class MainActivity : AppCompatActivity() {
         )
         appTitle.text = appTitleText
         appTitle.paint.shader = shader
+    }
+
+    private fun requestFruits() {
+
     }
 }
