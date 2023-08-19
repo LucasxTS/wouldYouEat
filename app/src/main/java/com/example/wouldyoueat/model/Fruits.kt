@@ -3,7 +3,7 @@ package com.example.wouldyoueat.model
 data class Fruits(
     val name : String,
     val id : Int,
-    val nutrition : ArrayList<Nutrition>
+    val nutritions : Nutrition
 )
 
 data class Nutrition(

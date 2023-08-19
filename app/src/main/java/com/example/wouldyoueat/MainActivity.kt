@@ -4,7 +4,7 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.wouldyoueat.apiRequest.Api
+import com.example.wouldyoueat.apiRequest.EndPoint
 import com.example.wouldyoueat.apiRequest.RetrofitBuilder
 import com.example.wouldyoueat.databinding.ActivityMainBinding
 import com.example.wouldyoueat.model.Fruits
@@ -14,17 +14,20 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var fruits : List<Fruits>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         callingFunctions()
+
     }
 
 
     private fun callingFunctions() {
-     textDegradeColor()
+        textDegradeColor()
+        getData()
     }
     private fun textDegradeColor() {
         val appTitle = binding.appTitle
@@ -41,17 +44,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val retrofitClient = RetrofitBuilder.getRetrofitInstance("https://fruityvice.com/")
-        val endPoint = retrofitClient.create(Api::class.java)
+        val retrofitClient = RetrofitBuilder.getRetrofitInstance("https://www.fruityvice.com/")
+        val endPoint = retrofitClient.create(EndPoint::class.java)
         val callback = endPoint.getFruits()
 
         callback.enqueue(object : Callback<List<Fruits>> {
             override fun onResponse(call: Call<List<Fruits>>, response: Response<List<Fruits>>) {
-
+                
             }
 
             override fun onFailure(call: Call<List<Fruits>>, t: Throwable) {
-                
+                println(t)
             }
 
         })
