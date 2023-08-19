@@ -4,7 +4,13 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.wouldyoueat.apiRequest.Api
+import com.example.wouldyoueat.apiRequest.RetrofitBuilder
 import com.example.wouldyoueat.databinding.ActivityMainBinding
+import com.example.wouldyoueat.model.Fruits
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -34,7 +40,20 @@ class MainActivity : AppCompatActivity() {
         appTitle.paint.shader = shader
     }
 
-    private fun requestFruits() {
+    private fun getData() {
+        val retrofitClient = RetrofitBuilder.getRetrofitInstance("https://fruityvice.com/")
+        val endPoint = retrofitClient.create(Api::class.java)
+        val callback = endPoint.getFruits()
 
+        callback.enqueue(object : Callback<List<Fruits>> {
+            override fun onResponse(call: Call<List<Fruits>>, response: Response<List<Fruits>>) {
+
+            }
+
+            override fun onFailure(call: Call<List<Fruits>>, t: Throwable) {
+                
+            }
+
+        })
     }
 }

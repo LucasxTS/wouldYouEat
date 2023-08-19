@@ -3,10 +3,10 @@ package com.example.wouldyoueat.model
 data class Fruits(
     val name : String,
     val id : Int,
-    val nutrition : ArrayList<nutritions>
+    val nutrition : ArrayList<Nutrition>
 )
 
-data class nutritions(
+data class Nutrition(
     val calories : Int,
     val fat : Double,
     val sugar : Double,
