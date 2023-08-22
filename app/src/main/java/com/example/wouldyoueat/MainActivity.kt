@@ -94,25 +94,15 @@ class MainActivity() : AppCompatActivity() {
                     val image = response.body()
                     if (image != null) {
                         val imageToImageVIew = image.photos[0].src.original
-
-                        //setGliderImage(imageToImageVIew)
                         val setImage = GlideModule.setImage(binding.fruitPhoto, this@MainActivity, imageToImageVIew)
                     }
                 }
             }
-
             override fun onFailure(call: Call<ImageModel>, t: Throwable) {
                 println(t)
             }
 
 
         })
-    }
-
-    private fun setGliderImage(url: String) {
-        Glide.with(this)
-            .load(url)
-            .centerCrop()
-            .into(binding.fruitPhoto)
     }
 }
