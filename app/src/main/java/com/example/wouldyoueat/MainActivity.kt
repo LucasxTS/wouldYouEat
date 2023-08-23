@@ -1,13 +1,10 @@
 package com.example.wouldyoueat
 
-import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import android.view.animation.AccelerateInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import com.example.wouldyoueat.GlideModule.GlideModule
 import com.example.wouldyoueat.apiRequest.EndPoint
 import com.example.wouldyoueat.apiRequest.FruitsImageInterface
@@ -23,6 +20,8 @@ import retrofit2.Response
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var fruits: List<Fruits> = listOf()
+    private var currentFruitId: Int = 0
+    private val fruitsEatenList = mutableListOf<Pair<String, Boolean>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -33,6 +32,33 @@ class MainActivity() : AppCompatActivity() {
     private fun callingFunctions() {
         textDegradeColor()
         getFruitsData()
+        buttonEatClick()
+        buttonNotEatClick()
+    }
+    private fun moveCardView(direction: Float) {
+        binding.cardView.animate()
+            .translationXBy(direction)
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(500)
+            .withEndAction {
+                currentFruitId++
+                getFruitsData()
+            }
+            .start()
+    }
+    private fun buttonEatClick() {
+        binding.eat.setOnClickListener {
+            val fruitName = fruits[currentFruitId].name
+            fruitsEatenList.add(fruitName to true)
+            moveCardView(1000f)
+        }
+    }
+    private fun buttonNotEatClick() {
+        binding.notEat.setOnClickListener {
+            val fruitName = fruits[currentFruitId].name
+            fruitsEatenList.add(fruitName to false)
+            moveCardView(-1000f)
+        }
     }
     private fun textDegradeColor() {
         val appTitle = binding.appTitle
@@ -64,6 +90,7 @@ class MainActivity() : AppCompatActivity() {
                     fruits = jsonFruits
                     loadImage(fruits)
                     bindingDescription(fruits)
+                    binding.cardView.animate().translationX(0f)
                 }
             }
 
@@ -73,16 +100,16 @@ class MainActivity() : AppCompatActivity() {
         })
     }
     private fun bindingDescription(fruits: List<Fruits>) {
-        binding.fruitName.text = fruits[20].name
-        binding.prothein.text = "P: ${fruits[20].nutritions.protein}"
-        binding.fat.text = "F: ${fruits[20].nutritions.fat}"
-        binding.carbo.text = "C: ${fruits[20].nutritions.carbohydrates}"
+        binding.fruitName.text = fruits[currentFruitId].name
+        binding.prothein.text = "P: ${fruits[currentFruitId].nutritions.protein}"
+        binding.fat.text = "F: ${fruits[currentFruitId].nutritions.fat}"
+        binding.carbo.text = "C: ${fruits[currentFruitId].nutritions.carbohydrates}"
 
     }
     private fun loadImage(fruitName: List<Fruits>) {
         val retrofitInstance = RetrofitBuilder.getRetrofitInstance("https://api.pexels.com/v1/")
         val endPoint = retrofitInstance.create(FruitsImageInterface::class.java)
-        val fruitNameToQuery = fruitName[20].name
+        val fruitNameToQuery = fruitName[currentFruitId].name
         val call = endPoint.getFruitImage(
             "TUqYKU35kjF3a8li1HLEswYjBQqQNfR8NgPd2EmgdnvqsWsRpswpXTZA",
             fruitNameToQuery

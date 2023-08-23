@@ -14,8 +14,8 @@ class GlideModule : AppGlideModule() {
     companion object {
          fun setImage(imageView: ImageView, context: Context, url: String) {
             val requestOptions = RequestOptions()
-                .override(320, 280)
                 .placeholder(R.drawable.ic_launcher_background)
+                .centerCrop()
                 .error(R.drawable.ic_launcher_background)
 
             Glide.with(context)

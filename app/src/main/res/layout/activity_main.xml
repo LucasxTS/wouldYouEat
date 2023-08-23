@@ -59,30 +59,33 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="18sp"
             android:id="@+id/prothein"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="P: 0" />
+            android:text="Prothein" />
 
         <Space
             android:layout_width="24dp"
             android:layout_height="12dp" />
 
         <TextView
+            android:textSize="18sp"
             android:id="@+id/carbo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C: 0" />
+            android:text="Carbohydrate" />
 
         <Space
             android:layout_width="24dp"
             android:layout_height="12dp" />
 
         <TextView
+            android:textSize="16sp"
             android:id="@+id/fat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="G: 0" />
+            android:text="Fat" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,6 +95,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/not_eat"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:background="@drawable/x" />
@@ -101,6 +105,7 @@
             android:layout_height="48dp" />
 
         <Button
+            android:id="@+id/eat"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:background="@drawable/circle" />
