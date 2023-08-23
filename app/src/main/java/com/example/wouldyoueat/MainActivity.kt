@@ -101,9 +101,9 @@ class MainActivity() : AppCompatActivity() {
     }
     private fun bindingDescription(fruits: List<Fruits>) {
         binding.fruitName.text = fruits[currentFruitId].name
-        binding.prothein.text = "P: ${fruits[currentFruitId].nutritions.protein}"
-        binding.fat.text = "F: ${fruits[currentFruitId].nutritions.fat}"
-        binding.carbo.text = "C: ${fruits[currentFruitId].nutritions.carbohydrates}"
+        binding.prothein.text = "${fruits[currentFruitId].nutritions.protein}"
+        binding.fat.text = "${fruits[currentFruitId].nutritions.fat}"
+        binding.carbohydrate.text = "${fruits[currentFruitId].nutritions.carbohydrates}"
 
     }
     private fun loadImage(fruitName: List<Fruits>) {

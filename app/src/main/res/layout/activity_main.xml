@@ -8,20 +8,19 @@
     tools:context=".MainActivity">
 
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
+
         <TextView
             android:id="@+id/app_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fruits"
             android:textSize="32sp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +38,7 @@
             <ImageView
                 android:id="@+id/fruit_photo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
 
@@ -49,44 +48,87 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="FruitName"
-            android:textSize="24sp" />
+            android:textSize="32sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:textSize="18sp"
-            android:id="@+id/prothein"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prothein" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prothein"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/prothein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"/>
+
+        </LinearLayout>
 
         <Space
             android:layout_width="24dp"
-            android:layout_height="12dp" />
+            android:layout_height="24dp" />
 
-        <TextView
-            android:textSize="18sp"
-            android:id="@+id/carbo"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Carbohydrate" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carbohydrate"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/carbohydrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"/>
+
+
+        </LinearLayout>
 
         <Space
             android:layout_width="24dp"
-            android:layout_height="12dp" />
+            android:layout_height="24dp" />
 
-        <TextView
-            android:textSize="16sp"
-            android:id="@+id/fat"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fat" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fat"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0" />
+
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
