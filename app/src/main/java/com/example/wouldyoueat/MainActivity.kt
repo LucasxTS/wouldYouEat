@@ -27,7 +27,6 @@ class MainActivity() : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         callingFunctions()
-
     }
     private fun callingFunctions() {
         textDegradeColor()
@@ -38,6 +37,7 @@ class MainActivity() : AppCompatActivity() {
     private fun moveCardView(direction: Float) {
         binding.cardView.animate()
             .translationXBy(direction)
+            .rotation(direction / 10)
             .setInterpolator(AccelerateInterpolator())
             .setDuration(500)
             .withEndAction {
@@ -91,6 +91,7 @@ class MainActivity() : AppCompatActivity() {
                     loadImage(fruits)
                     bindingDescription(fruits)
                     binding.cardView.animate().translationX(0f)
+                    binding.cardView.animate().rotation(0f)
                 }
             }
 
@@ -128,8 +129,6 @@ class MainActivity() : AppCompatActivity() {
             override fun onFailure(call: Call<ImageModel>, t: Throwable) {
                 println(t)
             }
-
-
         })
     }
 }

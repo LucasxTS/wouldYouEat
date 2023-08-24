@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Fruits"
             android:textSize="32sp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
