@@ -44,7 +44,6 @@ class MainActivity() : AppCompatActivity() {
         getFruitsData()
         buttonEatClick()
         buttonNotEatClick()
-        navigationController()
     }
     private fun moveCardView(direction: Float) {
         binding.cardView.animate()
@@ -111,24 +110,6 @@ class MainActivity() : AppCompatActivity() {
                 println(t)
             }
         })
-    }
-
-    fun navigationController() {
-        val  trueFruitsList = fruitsEatenList.filter { it.second == true }
-        val trueFruitsName = trueFruitsList.map { it.first }
-        bottomNavigationView = binding.bottomNavigation
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            when(menuItem.itemId) {
-                R.id.Eaten -> {
-                    val intent = Intent(this, EatenFruits::class.java)
-                    intent.putStringArrayListExtra("fruitsList", ArrayList(trueFruitsName))
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-
-        }
     }
     private fun bindingDescription(fruits: List<Fruits>) {
         binding.fruitName.text = fruits[currentFruitId].name
