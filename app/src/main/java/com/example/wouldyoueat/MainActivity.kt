@@ -1,8 +1,11 @@
 package com.example.wouldyoueat
 
+import android.content.Intent
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wouldyoueat.GlideModule.GlideModule
@@ -12,18 +15,26 @@ import com.example.wouldyoueat.apiRequest.RetrofitBuilder
 import com.example.wouldyoueat.databinding.ActivityMainBinding
 import com.example.wouldyoueat.model.Fruits
 import com.example.wouldyoueat.model.ImageModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Random
 
 class MainActivity() : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
     private var fruits: List<Fruits> = listOf()
     private var currentFruitId: Int = 0
     private val fruitsEatenList = mutableListOf<Pair<String, Boolean>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         callingFunctions()
@@ -33,6 +44,7 @@ class MainActivity() : AppCompatActivity() {
         getFruitsData()
         buttonEatClick()
         buttonNotEatClick()
+        navigationController()
     }
     private fun moveCardView(direction: Float) {
         binding.cardView.animate()
@@ -42,7 +54,8 @@ class MainActivity() : AppCompatActivity() {
             .setDuration(500)
             .withEndAction {
                 currentFruitId++
-                getFruitsData()
+                bindingDescription(fruits)
+                loadImage(fruits)
             }
             .start()
     }
@@ -87,11 +100,10 @@ class MainActivity() : AppCompatActivity() {
             override fun onResponse(call: Call<List<Fruits>>, response: Response<List<Fruits>>) {
                 val jsonFruits = response.body()
                 if (jsonFruits != null) {
-                    fruits = jsonFruits
+                    jsonFruits
+                    fruits = jsonFruits.shuffled(random = Random())
                     loadImage(fruits)
                     bindingDescription(fruits)
-                    binding.cardView.animate().translationX(0f)
-                    binding.cardView.animate().rotation(0f)
                 }
             }
 
@@ -99,6 +111,24 @@ class MainActivity() : AppCompatActivity() {
                 println(t)
             }
         })
+    }
+
+    fun navigationController() {
+        val  trueFruitsList = fruitsEatenList.filter { it.second == true }
+        val trueFruitsName = trueFruitsList.map { it.first }
+        bottomNavigationView = binding.bottomNavigation
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.Eaten -> {
+                    val intent = Intent(this, EatenFruits::class.java)
+                    intent.putStringArrayListExtra("fruitsList", ArrayList(trueFruitsName))
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+
+        }
     }
     private fun bindingDescription(fruits: List<Fruits>) {
         binding.fruitName.text = fruits[currentFruitId].name
@@ -123,6 +153,8 @@ class MainActivity() : AppCompatActivity() {
                     if (image != null) {
                         val imageToImageVIew = image.photos[0].src.original
                         val setImage = GlideModule.setImage(binding.fruitPhoto, this@MainActivity, imageToImageVIew)
+                        binding.cardView.animate().translationX(0f)
+                        binding.cardView.animate().rotation(0f)
                     }
                 }
             }
